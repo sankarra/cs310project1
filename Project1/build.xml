@@ -1,0 +1,58 @@
+<project name="FlightMap" default="compile" basedir=".">
+	<description>
+    simple example build file
+  </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+
+	<target name="init">
+		<mkdir dir="bin"/>
+		<mkdir dir="dist"/>
+		<mkdir dir="doc"/>
+	</target>
+
+	<target name="clean" depends="init"
+		description="clean up">
+		<delete dir="bin" />
+		<delete dir="dist" />
+		<delete dir="doc" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="src" destdir="bin" includes="**/*.java">
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="dist/flightMap.jar" basedir="bin"/>
+	</target>
+
+	<target name="doc" depends="init">
+		<!--<javadoc sourcepath="src" destdir="doc" /> -->
+		<javadoc destdir="doc">
+			<fileset dir="."/>
+		</javadoc>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit printsummary="yes" haltonfailure="no">
+
+			<!--<classpath refid="test.path" /> -->
+			<classpath location="bin" />
+
+			<!-- Make sure these two libraries are included -->
+			<classpath location="lib/junit-4.10.jar" />
+			<!--<classpath location="lib/hamcrest-core-1.3.jar" /> -->
+
+			<test name="junitTest" 
+					haltonfailure="no" outfile="result">
+				<formatter type="plain" />
+				<formatter type="xml" />
+			</test>
+
+		</junit>
+	</target>
+
+</project>
